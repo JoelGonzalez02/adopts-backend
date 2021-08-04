@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Cards from './dbCards.js';
 import Cors from 'cors';
 import Users from './dbUsers.js';
+import Token from './dbToken.js';
 
 
 
@@ -41,7 +42,7 @@ app.post('/adopts/card', (req, res) => {
     })
 });
 
-app.post('/token', (req, res) => {
+app.post('/adopts/token', (req, res) => {
     const dbToken = req.body;
 
     Token.create(dbToken, (err, data) => {
@@ -50,7 +51,7 @@ app.post('/token', (req, res) => {
         } else {
             res.status(201).send(data)
         }
-    });
+    })
 });
 
 app.post('/adopts/users', (req, res) => {
