@@ -1,21 +1,24 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import Cards from './dbCards.js';
 import Cors from 'cors';
-import Users from './dbUsers.js';
+import dotenv from 'dotenv';
+import router from './router.js';
 
+
+dotenv.config();
 
 // App Config
 
 const app = express();
 const port = process.env.PORT || 8001
-const connection_url = 'mongodb+srv://admin:itsalwayssunny2@cluster0.kwpi7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const connection_url = process.env.DATABASE_ACCESS
 
 
 // Middleware
 
-app.use(express.json())
+app.use(express.json());
 app.use(Cors());
+app.use('/app', router);
 
 // DB Config 
 mongoose.connect(connection_url, {
@@ -26,43 +29,7 @@ mongoose.connect(connection_url, {
 //  API Endpoints
 
 app.get('/', (req, res) => 
-    res.status(200).send('Hello World'));
-
-app.post('/adopts/card', (req, res) => {
-    const dbCard = req.body;
-
-    Cards.create(dbCard, (err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(201).send(data)
-        }
-    })
-});
-
-
-app.post('/adopts/users', (req, res) => {
-    const dbUser = req.body;
-
-    Users.create(dbUser, (err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(201).send(data)
-        }
-    })
-});
-
-app.get('/adopts/card', (req, res) => {
-    Cards.find((err, data) => {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.status(200).send(data)
-        }
-    });
-});
-
+    res.status(200).send('Adopts API'));
 
 
 // Listener
