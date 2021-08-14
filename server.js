@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import Cards from './dbCards.js';
 import Cors from 'cors';
 import Users from './dbUsers.js';
-import Token from './dbToken.js';
-
 
 
 // App Config
@@ -42,17 +40,6 @@ app.post('/adopts/card', (req, res) => {
     })
 });
 
-app.post('/adopts/token', (req, res) => {
-    const dbToken = req.body;
-
-    Token.create(dbToken, (err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(201).send(data)
-        }
-    })
-});
 
 app.post('/adopts/users', (req, res) => {
     const dbUser = req.body;
@@ -76,15 +63,6 @@ app.get('/adopts/card', (req, res) => {
     });
 });
 
-app.get('/token', (req, res) => {
-    Token.find((err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(200).send(data)
-        }
-    });
-});
 
 
 // Listener
